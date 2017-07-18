@@ -26,6 +26,9 @@ int main(int argc, char const *argv[]) {
       p1.x = position.x;
       p1.y = position.y;
 
+      double test = p2.angleTo(p1);
+      std::cout << "Angle: " << test << '\n';
+
       window.clear();
       p1.draw(window);
       p2.draw(window);

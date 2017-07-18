@@ -13,8 +13,8 @@ double Point::distTo(Point& p2) {
   return sqrt(tdx*tdx + tdy*tdy);
 }
 
-double angleTo(Point &p2) {
-  return 0;
+double Point::angleTo(Point &p2) {
+  return atan2(y - p2.y, x - p2.x);
 }
 
 // default point ctor called
