@@ -22,5 +22,17 @@ Blob::Blob(): mRadius(0), mSOI(0) {
 }
 
 // overloaded point ctor called
-Blob::Blob(double _x, double _y): Point(_x, _y), mRadius(0), mSOI(0) {
+Blob::Blob(double _radius, double _x, double _y): Point(_x, _y), mRadius(_radius), mSOI(0) {
+}
+
+void Blob::draw(sf::RenderWindow &window) {
+  sf::CircleShape shape(mRadius);
+  shape.setFillColor(sf::Color::Red);
+  shape.setOrigin(mRadius, mRadius);
+  shape.setPosition(sf::Vector2f(x, y));
+  window.draw(shape);
+}
+
+void Blob::setRadius(double _radius) {
+  mRadius = _radius;
 }

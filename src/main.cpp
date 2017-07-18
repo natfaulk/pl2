@@ -4,14 +4,12 @@
 
 int main(int argc, char const *argv[]) {
   Blob p1;
-  Blob p2(1, 1);
+  p1.setRadius(20);
+  Blob p2(20, 400, 400);
 
   std::cout << p1.distTo(p2) << '\n';
 
   sf::RenderWindow window(sf::VideoMode(1280, 800), "PL2");
-  sf::CircleShape shape(100.f);
-  shape.setFillColor(sf::Color::Green);
-  shape.setOrigin(100.f, 100.f);
 
   window.setFramerateLimit(60);
 
@@ -25,10 +23,12 @@ int main(int argc, char const *argv[]) {
       }
 
       sf::Vector2i position = sf::Mouse::getPosition(window);
-      shape.setPosition(sf::Vector2f(position.x, position.y));
-      std::cout << position.x << "," << position.y << '\n';
+      p1.x = position.x;
+      p1.y = position.y;
+
       window.clear();
-      window.draw(shape);
+      p1.draw(window);
+      p2.draw(window);
       window.display();
   }
 
