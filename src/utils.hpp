@@ -2,6 +2,7 @@
 #define UTILS_HPP
 
 #include <SFML/Graphics.hpp>
+#include <cstdint>
 
 class Point {
 public:
@@ -9,6 +10,8 @@ public:
   Point(double _x, double _y);
   double distTo(Point& p2);
   double angleTo(Point &p2);
+  Point pointOnCirc(double angle, double radius);
+  void moveToAR(double angle, double radius);
   double x;
   double y;
 };
@@ -16,12 +19,19 @@ public:
 class Blob: public Point {
 public:
   Blob();
-  Blob(double _radius, double _x, double _y);
+  Blob(double _radius, double _soi, double _x, double _y);
   void draw(sf::RenderWindow &window);
   void setRadius(double _radius);
+  void setColor(sf::Color c);
+  void setColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
+
+  friend bool blobCollision(Blob b1, Blob b2);
 private:
   double mRadius;
   double mSOI; // sphere of influence
+  sf::Color mColor;
 };
+
+
 
 #endif /* end of include guard: UTILS_HPP */
