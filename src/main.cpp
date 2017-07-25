@@ -62,7 +62,9 @@ int main(int argc, char const *argv[]) {
         if (jitter) {
           double tA = (dis(gen) - 0.5) * 2 * M_PI;
           double tR = dis(gen) * 10;
-          blobs.at(i).moveToAR(tA, tR);
+          blobs.at(i).velocity.setMag(tR);
+          blobs.at(i).velocity.setAngle(tA);
+          blobs.at(i).tick();
         }
 
         if (blobCollision(blobs.at(i), p1)) blobs.at(i).setColor(sf::Color::Red);

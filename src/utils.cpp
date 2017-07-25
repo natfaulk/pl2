@@ -26,6 +26,26 @@ void Point::moveToAR(double angle, double radius) {
   y += sin(angle) * radius;
 }
 
+double Point::getMag(void) {
+  return sqrt(x*x + y*y);
+}
+
+void Point::setMag(double mag) {
+  double tAng = this->getAngle();
+  x = cos(tAng) * mag;
+  y = sin(tAng) * mag;
+}
+
+double Point::getAngle(void) {
+  return atan2(y, x);
+}
+
+void Point::setAngle(double angle) {
+  double tMag = this->getMag();
+  x = cos(angle) * tMag;
+  y = sin(angle) * tMag;
+}
+
 // default point ctor called
 Blob::Blob(): mRadius(0), mSOI(0), mColor(sf::Color::Red) {
 }
@@ -69,4 +89,9 @@ bool blobCollision(Blob b1, Blob b2) {
   // Point p3 = b1.pointOnCirc(tA, b1.mRadius);
   // if (b2.distTo(p3) < b2.mRadius) return true;
   // else return false;
+}
+
+void Blob::tick(void) {
+  x += velocity.x;
+  y += velocity.y;
 }

@@ -12,6 +12,11 @@ public:
   double angleTo(Point &p2);
   Point pointOnCirc(double angle, double radius);
   void moveToAR(double angle, double radius);
+  double getMag(void);
+  void setMag(double);
+  double getAngle(void);
+  void setAngle(double);
+
   double x;
   double y;
 };
@@ -24,6 +29,9 @@ public:
   void setRadius(double _radius);
   void setColor(sf::Color c);
   void setColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
+  void tick(void);
+
+  Point velocity;
 
   friend bool blobCollision(Blob b1, Blob b2);
 private:
