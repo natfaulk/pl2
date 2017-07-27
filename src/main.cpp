@@ -67,10 +67,27 @@ int main(int argc, char const *argv[]) {
           blobs.at(i).tick();
         }
 
-        if (blobCollision(blobs.at(i), p1)) blobs.at(i).setColor(sf::Color::Red);
+        // if (blobCollision(blobs.at(i), p1)) blobs.at(i).setColor(sf::Color::Red);
+        // else blobs.at(i).setColor(sf::Color::Green);
+        //
+        // if (blobs.at(i).withinSOI(p1)) blobs.at(i).setOutlineColor(sf::Color::Red);
+        // else blobs.at(i).setOutlineColor(sf::Color::Green);
+
+        bool tCol = false;
+        bool tSoi = false;
+
+        for (int j = 0; j < blobs.size(); j++) {
+          if (i != j) {
+            if (blobCollision(blobs.at(i), blobs.at(j))) tCol = true;
+
+            if (blobs.at(i).withinSOI(blobs.at(j))) tSoi = true;
+          }
+        }
+
+        if (tCol) blobs.at(i).setColor(sf::Color::Red);
         else blobs.at(i).setColor(sf::Color::Green);
 
-        if (blobs.at(i).withinSOI(p1)) blobs.at(i).setOutlineColor(sf::Color::Red);
+        if (tSoi) blobs.at(i).setOutlineColor(sf::Color::Red);
         else blobs.at(i).setOutlineColor(sf::Color::Green);
 
         blobs.at(i).draw(window);
