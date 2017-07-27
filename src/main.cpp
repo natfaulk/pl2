@@ -70,6 +70,9 @@ int main(int argc, char const *argv[]) {
         if (blobCollision(blobs.at(i), p1)) blobs.at(i).setColor(sf::Color::Red);
         else blobs.at(i).setColor(sf::Color::Green);
 
+        if (blobs.at(i).withinSOI(p1)) blobs.at(i).setOutlineColor(sf::Color::Red);
+        else blobs.at(i).setOutlineColor(sf::Color::Green);
+
         blobs.at(i).draw(window);
 
       }

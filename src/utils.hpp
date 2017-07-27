@@ -28,8 +28,11 @@ public:
   void draw(sf::RenderWindow &window);
   void setRadius(double _radius);
   void setColor(sf::Color c);
+  void setOutlineColor(sf::Color c);
   void setColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
+  void setOutlineColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
   void tick(void);
+  bool withinSOI(Blob other);
 
   Point velocity;
 
@@ -38,6 +41,7 @@ private:
   double mRadius;
   double mSOI; // sphere of influence
   sf::Color mColor;
+  sf::Color mOutlineColor;
 };
 
 

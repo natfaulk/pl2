@@ -64,7 +64,7 @@ void Blob::draw(sf::RenderWindow &window) {
   shape.setFillColor(sf::Color::Transparent);
   shape.setRadius(mSOI);
   shape.setOrigin(mSOI, mSOI);
-  shape.setOutlineColor(sf::Color::Blue);
+  shape.setOutlineColor(mOutlineColor);
   shape.setOutlineThickness(5);
   window.draw(shape);
 }
@@ -79,6 +79,18 @@ void Blob::setColor(sf::Color c) {
 
 void Blob::setColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
   mColor = sf::Color(r, g, b, a);
+}
+
+void Blob::setOutlineColor(sf::Color c) {
+  mOutlineColor = c;
+}
+
+void Blob::setOutlineColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
+  mOutlineColor = sf::Color(r, g, b, a);
+}
+
+bool Blob::withinSOI(Blob other) {
+  return (this->distTo(other) < (this->mSOI + other.mRadius));
 }
 
 bool blobCollision(Blob b1, Blob b2) {
