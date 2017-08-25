@@ -23,7 +23,7 @@ int main(int argc, char const *argv[]) {
 
   std::vector<Blob> blobs;
 
-  for (size_t i = 0; i < 10; i++) {
+  for (size_t i = 0; i < 1; i++) {
     blobs.push_back(Blob(40, 95, 1280 * dis(gen), 600  * dis(gen)));
   }
 
@@ -31,6 +31,8 @@ int main(int argc, char const *argv[]) {
 
   while (window.isOpen())
   {
+      sf::Vector2i mousePosition = sf::Mouse::getPosition(window);
+
       sf::Event event;
       while (window.pollEvent(event))
       {
@@ -40,12 +42,15 @@ int main(int argc, char const *argv[]) {
               jitter = !jitter;
             }
           }
+          if (event.type == sf::Event::MouseButtonPressed) {
+            blobs.push_back(Blob(40, 95, mousePosition.x, mousePosition.y));
+            std::cout << "blob added" << '\n';
+          }
       }
 
-      sf::Vector2i position = sf::Mouse::getPosition(window);
-      p1.x = position.x;
-      p1.y = position.y;
 
+      p1.x = mousePosition.x;
+      p1.y = mousePosition.y;
       double test = p2.angleTo(p1);
       // std::cout << "Angle: " << test << '\n';
 
