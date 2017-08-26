@@ -5,6 +5,8 @@
 #include "utils.hpp"
 
 int main(int argc, char const *argv[]) {
+  const double COLLISION_BORDER_PX = 0.01;
+
   Blob p1;
   p1.setRadius(20);
   Blob p2(20, 60, 400, 400);
@@ -27,7 +29,7 @@ int main(int argc, char const *argv[]) {
     blobs.push_back(Blob(40, 95, 1280 * dis(gen), 600  * dis(gen)));
   }
 
-  bool jitter = true;
+  bool jitter = false;
 
   while (window.isOpen())
   {
@@ -83,7 +85,20 @@ int main(int argc, char const *argv[]) {
 
         for (int j = 0; j < blobs.size(); j++) {
           if (i != j) {
-            if (blobCollision(blobs.at(i), blobs.at(j))) tCol = true;
+            if (blobCollision(blobs.at(i), blobs.at(j))) {
+              // if blobs exact same position move one across a fraction
+              // otherwise move in same direction infinitely
+              if (blobs.at(i).x == blobs.at(j).x && blobs.at(i).y == blobs.at(j).y) {
+                blobs.at(j).x += COLLISION_BORDER_PX;
+              }
+              double tca1 = blobs.at(i).angleTo(blobs.at(j));
+              double tca2 = blobs.at(j).angleTo(blobs.at(i)); // could just invert tca1
+              double tcd = COLLISION_BORDER_PX + ((blobs.at(i).getRadius() + blobs.at(i).getRadius()) - blobs.at(i).distTo(blobs.at(j)));
+              blobs.at(i).moveToAR(tca2, tcd / 2);
+              blobs.at(j).moveToAR(tca1, tcd / 2);
+
+              tCol = true;
+            }
 
             if (blobs.at(i).withinSOI(blobs.at(j))) tSoi = true;
           }

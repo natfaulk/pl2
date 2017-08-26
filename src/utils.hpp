@@ -33,6 +33,7 @@ public:
   void setOutlineColor(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
   void tick(void);
   bool withinSOI(Blob other);
+  double getRadius(void);
 
   Point velocity;
 

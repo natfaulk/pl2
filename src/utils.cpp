@@ -107,3 +107,7 @@ void Blob::tick(void) {
   x += velocity.x;
   y += velocity.y;
 }
+
+double Blob::getRadius(void) {
+  return mRadius;
+}
