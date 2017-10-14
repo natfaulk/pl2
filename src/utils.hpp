@@ -34,6 +34,7 @@ public:
   void tick(void);
   bool withinSOI(Blob other);
   double getRadius(void);
+  void setDestination(double _x, double _y);
 
   Point velocity;
 
@@ -43,6 +44,9 @@ private:
   double mSOI; // sphere of influence
   sf::Color mColor;
   sf::Color mOutlineColor;
+
+  bool mHasDestination;
+  Point mDestination;
 };
 
 

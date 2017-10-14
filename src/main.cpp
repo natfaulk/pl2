@@ -4,16 +4,18 @@
 #include <cmath>
 #include "utils.hpp"
 
+const double BLOB_RADIUS = 15;
+
 int main(int argc, char const *argv[]) {
   const double COLLISION_BORDER_PX = 0.01;
 
-  Blob p1;
-  p1.setRadius(20);
+  Blob mouseBlob;
+  mouseBlob.setRadius(20);
   Blob p2(20, 60, 400, 400);
   Point p3;
   Blob p4(5, 10, 0, 0);
 
-  std::cout << p1.distTo(p2) << '\n';
+  std::cout << mouseBlob.distTo(p2) << '\n';
 
   sf::RenderWindow window(sf::VideoMode(1280, 800), "PL2");
 
@@ -25,11 +27,19 @@ int main(int argc, char const *argv[]) {
 
   std::vector<Blob> blobs;
 
-  for (size_t i = 0; i < 1; i++) {
-    blobs.push_back(Blob(40, 95, 1280 * dis(gen), 600  * dis(gen)));
+  // auto add blobs
+  const double BLOBS_TO_AUTO_ADD = 100;
+  for (size_t i = 0; i < BLOBS_TO_AUTO_ADD; i++) {
+    blobs.push_back(Blob(BLOB_RADIUS, 2.2 * BLOB_RADIUS, 700 + 300 * dis(gen), 300 + 300 * dis(gen)));
   }
 
   bool jitter = false;
+
+  Blob destTest(BLOB_RADIUS, 2.2 * BLOB_RADIUS, 100, 100);
+  destTest.setDestination(1180, 500);
+  blobs.push_back(destTest);
+
+  Blob destination(BLOB_RADIUS * 0.5, BLOB_RADIUS * 0.5, 1180, 500);
 
   while (window.isOpen())
   {
@@ -45,19 +55,19 @@ int main(int argc, char const *argv[]) {
             }
           }
           if (event.type == sf::Event::MouseButtonPressed) {
-            blobs.push_back(Blob(40, 95, mousePosition.x, mousePosition.y));
+            blobs.push_back(Blob(BLOB_RADIUS, 2.2 * BLOB_RADIUS, mousePosition.x, mousePosition.y));
             std::cout << "blob added" << '\n';
           }
       }
 
 
-      p1.x = mousePosition.x;
-      p1.y = mousePosition.y;
-      double test = p2.angleTo(p1);
+      mouseBlob.x = mousePosition.x;
+      mouseBlob.y = mousePosition.y;
+      double test = p2.angleTo(mouseBlob);
       // std::cout << "Angle: " << test << '\n';
 
       window.clear();
-      p1.draw(window);
+      mouseBlob.draw(window);
       p2.draw(window);
 
       p3 = p2.pointOnCirc(test, 50);
@@ -65,14 +75,16 @@ int main(int argc, char const *argv[]) {
       p4.y = p3.y;
       p4.draw(window);
 
+      destination.draw(window);
+
       for (int i = 0; i < blobs.size(); i++) {
         if (jitter) {
           double tA = (dis(gen) - 0.5) * 2 * M_PI;
           double tR = dis(gen) * 10;
           blobs.at(i).velocity.setMag(tR);
           blobs.at(i).velocity.setAngle(tA);
-          blobs.at(i).tick();
         }
+        blobs.at(i).tick();
 
         // if (blobCollision(blobs.at(i), p1)) blobs.at(i).setColor(sf::Color::Red);
         // else blobs.at(i).setColor(sf::Color::Green);
