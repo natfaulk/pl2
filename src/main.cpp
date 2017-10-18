@@ -3,6 +3,7 @@
 #include <random>
 #include <cmath>
 #include "utils.hpp"
+#include "walls.hpp"
 
 const double BLOB_RADIUS = 15;
 
@@ -26,6 +27,9 @@ int main(int argc, char const *argv[]) {
   std::uniform_real_distribution<> dis(0, 1);
 
   std::vector<Blob> blobs;
+  std::vector<Wall> walls;
+
+  walls.push_back(Wall(100, 100, 100, 100));
 
   // auto add blobs
   const double BLOBS_TO_AUTO_ADD = 100;
@@ -74,6 +78,10 @@ int main(int argc, char const *argv[]) {
       p4.x = p3.x;
       p4.y = p3.y;
       p4.draw(window);
+
+      for (int i = 0; i < walls.size(); i++) {
+        walls.at(i).draw(window);
+      }
 
       destination.draw(window);
 
