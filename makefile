@@ -2,7 +2,6 @@ CC=g++
 CC_FLAGS=-c -Wall --std=c++11 -Iinc
 CC_FLAGS += -I/usr/local/include -g
 LDFLAGS  := -L/usr/local/lib -F/Library/Frameworks -framework SFML -framework sfml-audio -framework sfml-system -framework sfml-window -framework sfml-graphics
-LDLIBS 	 := -lBox2D
 PROGRAM_NAME=pl2
 
 CPP_FILES := $(wildcard src/*.cpp)
@@ -16,7 +15,7 @@ all: $(BINDIR)/pl2
 
 $(BINDIR)/pl2: $(OBJ_FILES)
 	@echo "Compiling..."
-	g++ $(LDFLAGS) -o $@ $^ $(LDLIBS)
+	g++ $(LDFLAGS) -o $@ $^
 
 $(OBJDIR)/%.o: src/%.cpp
 	g++ $(CC_FLAGS) -c -o $@ $<
