@@ -44,3 +44,35 @@ bool blobWallCollision(Blob &b1, Wall &w1) {
   // if (b2.distTo(p3) < b2.mRadius) return true;
   // else return false;
 }
+
+// a bit hacky but a nice non trig solution
+// on second thoughts was a lazy but quite efficient solution
+// isnt quite correct implementation but will do for now
+natfaulk::Direction blobWallCollisionDirection(Blob &b1, Wall &w1) {
+  double h_2 = w1.h / 2;
+  double w_2 = w1.w / 2;
+  double xdiff = w1.x - b1.x;
+  double ydiff = w1.y - b1.y;
+  double xyProp = w1.h / w1.w;
+  xdiff *= xyProp;
+  double xProp = xdiff / (h_2);
+  double yProp = ydiff / (w_2 * xyProp);
+  
+  if (xdiff > 0) {
+    if (ydiff > 0) {
+      if (yProp > xProp) return natfaulk::UP;
+      else return natfaulk::LEFT;
+    } else {
+      if (-yProp > xProp) return natfaulk::DOWN;
+      else return natfaulk::LEFT;
+    }
+  } else {
+    if (ydiff > 0) {
+      if (yProp > -xProp) return natfaulk::UP;
+      else return natfaulk::RIGHT;
+    } else {
+      if (-yProp > -xProp) return natfaulk::DOWN;
+      else return natfaulk::RIGHT;
+    }
+  }
+}

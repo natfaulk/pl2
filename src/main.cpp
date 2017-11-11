@@ -32,6 +32,7 @@ int main(int argc, char const *argv[]) {
   walls.push_back(Wall(200, 200, 100, 100));
   walls.push_back(Wall(850, 250, 350, 20));
   walls.push_back(Wall(850, 650, 350, 20));
+  walls.push_back(Wall(200, 650, 300, 100));  
   
 
   // auto add blobs
@@ -133,6 +134,29 @@ int main(int argc, char const *argv[]) {
         for (int j = 0; j < walls.size(); j++) {
           if (blobWallCollision(blobs.at(i), walls.at(j))) {
             blobs.at(i).setColor(sf::Color::Blue);
+
+            natfaulk::Direction tempDir = blobWallCollisionDirection(blobs.at(i), walls.at(j));
+
+            // move blob away from wall
+            // double tempAngle = walls.at(j).angleTo(blobs.at(i));
+            Point tempPoint(blobs.at(i).x, blobs.at(i).y);
+            
+            sf::Vertex line[2];
+            line[0].position = sf::Vector2f(tempPoint.x, tempPoint.y);
+            line[0].color  = sf::Color::White;
+
+            if (tempDir == natfaulk::LEFT) tempPoint.moveToAR(M_PI, 50);
+            else if (tempDir == natfaulk::RIGHT) tempPoint.moveToAR(0, 50);
+            else if (tempDir == natfaulk::UP) tempPoint.moveToAR(-M_PI_2, 50);
+            else tempPoint.moveToAR(M_PI_2, 50);
+
+            line[1].position = sf::Vector2f(tempPoint.x, tempPoint.y);
+            line[1].color = sf::Color::White;
+
+            // angle boundaries
+            
+
+            window.draw(line, 2, sf::Lines);
           }
         }
 
