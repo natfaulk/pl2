@@ -38,7 +38,7 @@ public:
 
   Point velocity;
 
-  friend bool blobCollision(Blob b1, Blob b2);
+  friend bool blobCollision(Blob &b1, Blob &b2);
 private:
   double mRadius;
   double mSOI; // sphere of influence
