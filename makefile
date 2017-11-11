@@ -25,3 +25,6 @@ clean:
 
 rebuild: clean
 	$(MAKE)
+
+run: $(BINDIR)/pl2
+	./$(BINDIR)/pl2
