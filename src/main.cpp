@@ -32,7 +32,9 @@ int main(int argc, char const *argv[]) {
   walls.push_back(Wall(200, 200, 100, 100));
   walls.push_back(Wall(850, 250, 350, 20));
   walls.push_back(Wall(850, 650, 350, 20));
-  walls.push_back(Wall(200, 650, 300, 100));  
+  walls.push_back(Wall(200, 650, 300, 100));
+  walls.push_back(Wall(650, 450, 20, 350));
+  walls.push_back(Wall(1050, 450, 20, 350));
   
 
   // auto add blobs
@@ -145,10 +147,21 @@ int main(int argc, char const *argv[]) {
             line[0].position = sf::Vector2f(tempPoint.x, tempPoint.y);
             line[0].color  = sf::Color::White;
 
-            if (tempDir == natfaulk::LEFT) tempPoint.moveToAR(M_PI, 50);
-            else if (tempDir == natfaulk::RIGHT) tempPoint.moveToAR(0, 50);
-            else if (tempDir == natfaulk::UP) tempPoint.moveToAR(-M_PI_2, 50);
-            else tempPoint.moveToAR(M_PI_2, 50);
+            double tempRadius = blobs.at(i).getRadius();
+
+            if (tempDir == natfaulk::LEFT) {
+              tempPoint.moveToAR(M_PI, 50);
+              blobs.at(i).moveToAR(M_PI, tempRadius + COLLISION_BORDER_PX + (walls.at(j).w / 2 - (walls.at(j).x - blobs.at(i).x)));
+            } else if (tempDir == natfaulk::RIGHT) {
+              tempPoint.moveToAR(0, 50);
+              blobs.at(i).moveToAR(0, tempRadius + COLLISION_BORDER_PX + (walls.at(j).w / 2 - (blobs.at(i).x - walls.at(j).x)));              
+            } else if (tempDir == natfaulk::UP) {
+              tempPoint.moveToAR(-M_PI_2, 50);
+              blobs.at(i).moveToAR(-M_PI_2, tempRadius + COLLISION_BORDER_PX + (walls.at(j).h / 2 - (walls.at(j).y - blobs.at(i).y)));              
+            } else {
+              tempPoint.moveToAR(M_PI_2, 50);
+              blobs.at(i).moveToAR(M_PI_2, tempRadius + COLLISION_BORDER_PX + (walls.at(j).h / 2 - (blobs.at(i).y - walls.at(j).y)));                            
+            }
 
             line[1].position = sf::Vector2f(tempPoint.x, tempPoint.y);
             line[1].color = sf::Color::White;
