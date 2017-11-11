@@ -102,7 +102,7 @@ bool Blob::withinSOI(Blob other) {
   return (this->distTo(other) < (this->mSOI + other.mRadius));
 }
 
-bool blobCollision(Blob b1, Blob b2) {
+bool blobCollision(Blob &b1, Blob &b2) {
   return (b1.distTo(b2) < (b1.mRadius + b2.mRadius));
 
   // below checks intersection, however one could be inside the other...

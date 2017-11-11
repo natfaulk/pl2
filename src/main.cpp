@@ -29,7 +29,7 @@ int main(int argc, char const *argv[]) {
   std::vector<Blob> blobs;
   std::vector<Wall> walls;
 
-  walls.push_back(Wall(100, 100, 100, 100));
+  walls.push_back(Wall(200, 200, 100, 100));
 
   // auto add blobs
   const double BLOBS_TO_AUTO_ADD = 100;
@@ -124,8 +124,16 @@ int main(int argc, char const *argv[]) {
           }
         }
 
-        if (tCol) blobs.at(i).setColor(sf::Color::Red);
-        else blobs.at(i).setColor(sf::Color::Green);
+        for (int j = 0; j < walls.size(); j++) {
+          if (blobWallCollision(blobs.at(i), walls.at(j))) {
+            blobs.at(i).setColor(sf::Color::Blue);
+          } else {
+            blobs.at(i).setColor(sf::Color::Green);            
+          }
+        }
+
+        // if (tCol) blobs.at(i).setColor(sf::Color::Red);
+        // else blobs.at(i).setColor(sf::Color::Green);
 
         if (tSoi) blobs.at(i).setOutlineColor(sf::Color::Red);
         else blobs.at(i).setOutlineColor(sf::Color::Green);

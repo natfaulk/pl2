@@ -15,4 +15,6 @@ private:
   sf::Color mColor;
 };
 
+bool blobWallCollision(Blob &b1, Wall &w1);
+
 #endif /* end of include guard: WALLS_HPP */
