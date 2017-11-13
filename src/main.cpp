@@ -4,6 +4,7 @@
 #include <cmath>
 #include "utils.hpp"
 #include "walls.hpp"
+#include "blob.hpp"
 
 const double BLOB_RADIUS = 15;
 

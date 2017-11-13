@@ -2,6 +2,7 @@
 #define WALLS_HPP
 
 #include "utils.hpp"
+#include "blob.hpp"
 #include <SFML/Graphics.hpp>
 
 class Wall: public Point {
