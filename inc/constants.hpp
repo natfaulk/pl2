@@ -17,5 +17,11 @@ const char WINDOW_TITLE[] = "PL2";
 #define DEBUG_DRAW_BLOB_WAYPOINT
 #define DEBUG_DRAW_WALL_NORMAL
 #define DEBUG_DRAW_BLOB_WALL_COLLISION
+#define DEBUG_DRAW_PF_GRID
+
+// ============================================================================
+//  Pathfinding (PF) settings
+// ============================================================================
+const int PF_GRID_SIZE = 50;
 
 #endif /* end of include guard: CONSTANTS_HPP */    

@@ -7,6 +7,7 @@
 #include "blob.hpp"
 #include "buildWorld.hpp"
 #include "constants.hpp"
+#include "pathfinding.hpp"
 
 const double BLOB_RADIUS = 15;
 
@@ -186,6 +187,8 @@ int main(int argc, char const *argv[]) {
         blobs.at(i).draw(window);
 
       }
+    
+      PF_Draw(window);
 
       window.display();
   }
