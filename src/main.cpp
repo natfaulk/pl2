@@ -5,6 +5,8 @@
 #include "utils.hpp"
 #include "walls.hpp"
 #include "blob.hpp"
+#include "buildWorld.hpp"
+#include "constants.hpp"
 
 const double BLOB_RADIUS = 15;
 
@@ -19,7 +21,7 @@ int main(int argc, char const *argv[]) {
 
   std::cout << mouseBlob.distTo(p2) << '\n';
 
-  sf::RenderWindow window(sf::VideoMode(1280, 800), "PL2");
+  sf::RenderWindow window(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), WINDOW_TITLE);
 
   window.setFramerateLimit(30);
 
@@ -30,25 +32,25 @@ int main(int argc, char const *argv[]) {
   std::vector<Blob> blobs;
   std::vector<Wall> walls;
 
-  walls.push_back(Wall(200, 200, 100, 100));
-  walls.push_back(Wall(850, 250, 350, 20));
-  walls.push_back(Wall(850, 650, 350, 20));
-  walls.push_back(Wall(200, 650, 300, 100));
-  walls.push_back(Wall(650, 450, 20, 350));
-  walls.push_back(Wall(1050, 450, 20, 350));
-  
+  buildWorld(walls);
 
   // auto add blobs
-  const double BLOBS_TO_AUTO_ADD = 100;
+  const double BLOBS_TO_AUTO_ADD = 20;
   for (size_t i = 0; i < BLOBS_TO_AUTO_ADD; i++) {
-    blobs.push_back(Blob(BLOB_RADIUS, 2.2 * BLOB_RADIUS, 700 + 300 * dis(gen), 300 + 300 * dis(gen)));
+    blobs.push_back(Blob(BLOB_RADIUS, 2.2 * BLOB_RADIUS, 700 + 300 * dis(gen), 250 + 300 * dis(gen)));
   }
 
   bool jitter = false;
 
-  Blob destTest(BLOB_RADIUS, 2.2 * BLOB_RADIUS, 100, 100);
-  destTest.setDestination(1180, 500);
-  blobs.push_back(destTest);
+  // Blob destTest(BLOB_RADIUS, 2.2 * BLOB_RADIUS, 100, 100);
+  // destTest.setDestination(1180, 800);
+  // blobs.push_back(destTest);
+
+  for (size_t i = 0; i < 50; i++) {
+    Blob tempBlob(BLOB_RADIUS, 2.2 * BLOB_RADIUS, 100, 100);
+    tempBlob.setDestination(1180, 700);
+    blobs.push_back(tempBlob);
+  }
 
   Blob destination(BLOB_RADIUS * 0.5, BLOB_RADIUS * 0.5, 1180, 500);
 
@@ -136,7 +138,10 @@ int main(int argc, char const *argv[]) {
 
         for (int j = 0; j < walls.size(); j++) {
           if (blobWallCollision(blobs.at(i), walls.at(j))) {
+            
+          #ifdef DEBUG_DRAW_BLOB_WALL_COLLISION
             blobs.at(i).setColor(sf::Color::Blue);
+          #endif
 
             natfaulk::Direction tempDir = blobWallCollisionDirection(blobs.at(i), walls.at(j));
 
@@ -144,9 +149,11 @@ int main(int argc, char const *argv[]) {
             // double tempAngle = walls.at(j).angleTo(blobs.at(i));
             Point tempPoint(blobs.at(i).x, blobs.at(i).y);
             
+          #ifdef DEBUG_DRAW_WALL_NORMAL
             sf::Vertex line[2];
             line[0].position = sf::Vector2f(tempPoint.x, tempPoint.y);
             line[0].color  = sf::Color::White;
+          #endif
 
             double tempRadius = blobs.at(i).getRadius();
 
@@ -163,14 +170,12 @@ int main(int argc, char const *argv[]) {
               tempPoint.moveToAR(M_PI_2, 50);
               blobs.at(i).moveToAR(M_PI_2, tempRadius + COLLISION_BORDER_PX + (walls.at(j).h / 2 - (blobs.at(i).y - walls.at(j).y)));                            
             }
-
+          
+          #ifdef DEBUG_DRAW_WALL_NORMAL          
             line[1].position = sf::Vector2f(tempPoint.x, tempPoint.y);
             line[1].color = sf::Color::White;
-
-            // angle boundaries
-            
-
             window.draw(line, 2, sf::Lines);
+          #endif          
           }
         }
 

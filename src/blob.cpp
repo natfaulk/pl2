@@ -1,4 +1,5 @@
 #include "blob.hpp"
+#include "constants.hpp"
 
 // default point ctor called
 Blob::Blob(): mRadius(0), mSOI(0), mColor(sf::Color::Red) {
@@ -13,8 +14,6 @@ Blob::Blob(double _radius, double _soi, double _x, double _y):
   mHasDestination(false)
 {}
 
-// #define SOI_DRAW
-
 void Blob::draw(sf::RenderWindow &window) {
   sf::CircleShape shape(mRadius);
   shape.setFillColor(mColor);
@@ -22,13 +21,24 @@ void Blob::draw(sf::RenderWindow &window) {
   shape.setPosition(sf::Vector2f(x, y));
   window.draw(shape);
 
-#ifdef SOI_DRAW
+#ifdef DEBUG_DRAW_SOI
   shape.setFillColor(sf::Color::Transparent);
   shape.setRadius(mSOI);
   shape.setOrigin(mSOI, mSOI);
   shape.setOutlineColor(mOutlineColor);
   shape.setOutlineThickness(5);
   window.draw(shape);
+#endif
+
+#ifdef DEBUG_DRAW_BLOB_WAYPOINT
+  if (mHasDestination) {
+    sf::Vertex line[2];
+    line[0].position = sf::Vector2f(x, y);
+    line[0].color  = sf::Color::White;
+    line[1].position = sf::Vector2f(mDestination.x, mDestination.y);
+    line[1].color = sf::Color::White;
+    window.draw(line, 2, sf::Lines);
+  }
 #endif
 }
 
